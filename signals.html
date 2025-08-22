@@ -20,16 +20,18 @@
 
   <section>
     <h2>📈 Live Trading Signals</h2>
-    <p>Real-time signals from our server.</p>
-    <div id="signals-container" class="grid">
-      <!-- Signals will load here -->
-    </div>
+    <p>Below are your live signals from the Streamlit server.</p>
+    
+    <!-- Iframe to embed your Streamlit app -->
+    <iframe src="http://192.168.12.42:8501" width="100%" height="800px" style="border:none; border-radius:16px;"></iframe>
+    
+    <p style="margin-top:10px; color:#555; font-size:0.9em;">
+      ⚠️ If signals are not showing, ensure your server is running and accessible.
+    </p>
   </section>
 
   <footer>
     <p>© 2025 Trading Hub. All rights reserved.</p>
   </footer>
-
-  <script src="js/scripts.js"></script>
 </body>
 </html>
