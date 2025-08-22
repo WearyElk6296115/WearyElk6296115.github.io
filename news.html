@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market News | MarketPulse Pro</title>
+    <title>Forex News & Analysis | MarketPulse Pro</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,179 +14,204 @@
             text-align: center;
         }
         
-        .news-filters {
+        .news-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 5px;
             margin: 30px 0;
             flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
         }
         
-        .news-filter-btn {
-            padding: 8px 20px;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 20px;
+        .news-tab {
+            padding: 10px 20px;
+            border: none;
+            background: none;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
+            border-radius: 6px 6px 0 0;
         }
         
-        .news-filter-btn:hover,
-        .news-filter-btn.active {
+        .news-tab:hover,
+        .news-tab.active {
             background: var(--primary);
             color: white;
-            border-color: var(--primary);
         }
         
-        .news-container {
+        .tab-content {
+            display: none;
             min-height: 500px;
         }
         
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+        .tab-content.active {
+            display: block;
+        }
+        
+        .news-container {
             margin-bottom: 40px;
         }
         
-        .news-card {
+        /* Event List Styles */
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
             background: white;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--card-shadow);
-            transition: var(--transition);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
         }
         
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
+        .event-table th,
+        .event-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
         }
         
-        .news-image {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .news-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .news-card:hover .news-image img {
-            transform: scale(1.05);
-        }
-        
-        .news-category {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--primary);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+        .event-table th {
+            background: var(--background-alt);
             font-weight: 600;
-            text-transform: uppercase;
         }
         
-        .news-content {
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        .event-table tr:last-child td {
+            border-bottom: none;
         }
         
-        .news-content h3 {
-            margin-bottom: 10px;
-            line-height: 1.4;
+        .event-table tr:hover {
+            background: #f8f9fa;
         }
         
-        .news-content h3 a {
-            color: var(--text);
-            text-decoration: none;
-            transition: var(--transition);
+        /* Calendar Styles */
+        .calendar {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
         }
         
-        .news-content h3 a:hover {
-            color: var(--primary);
-        }
-        
-        .news-content p {
-            color: var(--text-light);
-            margin-bottom: 15px;
-            flex: 1;
-        }
-        
-        .news-meta {
+        .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-light);
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
+            padding: 15px 20px;
+            background: var(--background-alt);
+            border-bottom: 1px solid var(--border);
         }
         
-        .news-source {
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: var(--border);
+        }
+        
+        .calendar-day {
+            background: white;
+            padding: 10px;
+            min-height: 100px;
+        }
+        
+        .calendar-day.header {
+            background: var(--background-alt);
             font-weight: 600;
-            color: var(--primary);
+            text-align: center;
+            min-height: auto;
         }
         
-        .news-loading {
+        .event-item {
+            background: #e3f2fd;
+            border-left: 3px solid var(--primary);
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+        
+        /* Analysis Cards */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .analysis-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .analysis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .sentiment {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .sentiment.bullish {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .sentiment.bearish {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .sentiment.hawkish {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .sentiment.dovish {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        /* Loading and Error States */
+        .loading, .error {
             text-align: center;
-            padding: 60px 0;
+            padding: 60px 20px;
             color: var(--text-light);
         }
         
-        .news-error {
-            text-align: center;
-            padding: 60px 0;
+        .error {
             color: var(--danger);
         }
         
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 40px;
-        }
-        
-        .pagination-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .pagination-btn:hover,
-        .pagination-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .news-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .news-filters {
+            .news-tabs {
                 justify-content: flex-start;
                 overflow-x: auto;
                 padding-bottom: 10px;
             }
             
-            .news-filter-btn {
+            .news-tab {
                 white-space: nowrap;
+            }
+            
+            .event-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -222,40 +247,105 @@
     <!-- News Header -->
     <section class="news-header">
         <div class="container">
-            <h1>Financial Market News</h1>
-            <p>Stay updated with the latest market-moving news and analysis</p>
+            <h1>Forex Factory News & Analysis</h1>
+            <p>Real-time economic events, analysis, and trading insights</p>
         </div>
     </section>
 
-    <!-- News Filters -->
-    <section class="news-filters-section">
+    <!-- News Tabs -->
+    <section class="news-tabs-section">
         <div class="container">
-            <div class="news-filters">
-                <button class="news-filter-btn active" data-category="business">Business</button>
-                <button class="news-filter-btn" data-category="finance">Finance</button>
-                <button class="news-filter-btn" data-category="technology">Technology</button>
-                <button class="news-filter-btn" data-category="economics">Economics</button>
-                <button class="news-filter-btn" data-category="crypto">Crypto</button>
-                <button class="news-filter-btn" data-category="all">All News</button>
+            <div class="news-tabs">
+                <button class="news-tab active" data-tab="calendar">Calendar</button>
+                <button class="news-tab" data-tab="event-list">Event List</button>
+                <button class="news-tab" data-tab="event-history">Event History</button>
+                <button class="news-tab" data-tab="ml-analysis">ML Analysis</button>
+                <button class="news-tab" data-tab="smart-analysis">Smart Analysis</button>
+                <button class="news-tab" data-tab="gpt-insights">GPT Insights</button>
             </div>
         </div>
     </section>
 
-    <!-- News Content -->
+    <!-- Tab Contents -->
     <section class="news-content-section">
         <div class="container">
-            <div class="news-container">
-                <div class="news-loading">
-                    <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    <p>Loading latest news...</p>
+            <!-- Calendar Tab -->
+            <div class="tab-content active" id="calendar">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <h3>Economic Calendar</h3>
+                        <div class="calendar-nav">
+                            <button class="btn-secondary btn-small"><i class="fas fa-chevron-left"></i></button>
+                            <span>November 2023</span>
+                            <button class="btn-secondary btn-small"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Loading economic calendar...</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="pagination">
-                <button class="pagination-btn active">1</button>
-                <button class="pagination-btn">2</button>
-                <button class="pagination-btn">3</button>
-                <button class="pagination-btn">Next →</button>
+            <!-- Event List Tab -->
+            <div class="tab-content" id="event-list">
+                <div class="news-container">
+                    <h3>Economic Events</h3>
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Loading event list...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event History Tab -->
+            <div class="tab-content" id="event-history">
+                <div class="news-container">
+                    <h3>Event Historical Analysis</h3>
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Loading event history...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Analysis Tab -->
+            <div class="tab-content" id="ml-analysis">
+                <div class="news-container">
+                    <h3>Machine Learning Predictions</h3>
+                    <div class="analysis-grid">
+                        <div class="loading" style="grid-column: 1 / -1;">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                            <p>Loading ML analysis...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Analysis Tab -->
+            <div class="tab-content" id="smart-analysis">
+                <div class="news-container">
+                    <h3>Smart Analysis</h3>
+                    <div class="analysis-grid">
+                        <div class="loading" style="grid-column: 1 / -1;">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                            <p>Loading smart analysis...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GPT Insights Tab -->
+            <div class="tab-content" id="gpt-insights">
+                <div class="news-container">
+                    <h3>GPT Market Insights & Education</h3>
+                    <div class="analysis-grid">
+                        <div class="loading" style="grid-column: 1 / -1;">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                            <p>Loading GPT insights...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -304,43 +394,62 @@
 
     <!-- JavaScript -->
     <script>
-        // News loading functionality
-        async function loadNews(category = 'business') {
-            const container = document.querySelector('.news-container');
-            if (!container) return;
-            
+        // Forex Factory API endpoints (example structure)
+        const FOREX_FACTORY_ENDPOINTS = {
+            eventList: '/api/forexfactory/events',
+            eventInfo: '/api/forexfactory/event/', // + eventId
+            eventHistory: '/api/forexfactory/history/', // + eventId
+            mlAnalysis: '/api/forexfactory/ml-analysis',
+            smartAnalysis: '/api/forexfactory/smart-analysis',
+            fullEventList: '/api/forexfactory/full-events',
+            calendar: '/api/forexfactory/calendar',
+            gptInsights: '/api/forexfactory/gpt-insights'
+        };
+
+        // Current active tab
+        let activeTab = 'calendar';
+
+        // Load data for active tab
+        async function loadTabData(tabId) {
+            const tabContent = document.getElementById(tabId);
+            if (!tabContent) return;
+
             // Show loading state
-            container.innerHTML = `
-                <div class="news-loading">
+            tabContent.innerHTML = `
+                <div class="loading">
                     <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    <p>Loading ${category} news...</p>
+                    <p>Loading ${tabId.replace('-', ' ')}...</p>
                 </div>
             `;
-            
+
             try {
-                // Try to fetch real news data
-                const news = await fetchNewsData(category);
-                
-                if (news && news.length > 0) {
-                    renderNews(container, news);
-                } else {
-                    container.innerHTML = `
-                        <div class="news-error">
-                            <i class="fas fa-exclamation-triangle fa-2x"></i>
-                            <p>Unable to load news at this time</p>
-                            <button onclick="loadNews('${category}')" class="btn-primary" style="margin-top: 15px;">
-                                Try Again
-                            </button>
-                        </div>
-                    `;
+                switch(tabId) {
+                    case 'calendar':
+                        await loadCalendarData();
+                        break;
+                    case 'event-list':
+                        await loadEventList();
+                        break;
+                    case 'event-history':
+                        await loadEventHistory();
+                        break;
+                    case 'ml-analysis':
+                        await loadMLAnalysis();
+                        break;
+                    case 'smart-analysis':
+                        await loadSmartAnalysis();
+                        break;
+                    case 'gpt-insights':
+                        await loadGPTInsights();
+                        break;
                 }
             } catch (error) {
-                console.error('Error loading news:', error);
-                container.innerHTML = `
-                    <div class="news-error">
+                console.error(`Error loading ${tabId} data:`, error);
+                tabContent.innerHTML = `
+                    <div class="error">
                         <i class="fas fa-exclamation-triangle fa-2x"></i>
-                        <p>Error loading news: ${error.message}</p>
-                        <button onclick="loadNews('${category}')" class="btn-primary" style="margin-top: 15px;">
+                        <p>Error loading data: ${error.message}</p>
+                        <button onclick="loadTabData('${tabId}')" class="btn-primary" style="margin-top: 15px;">
                             Try Again
                         </button>
                     </div>
@@ -348,113 +457,130 @@
             }
         }
 
-        // Fetch news data from API
-        async function fetchNewsData(category) {
-            try {
-                // Using News API (replace with your actual API key)
-                const apiKey = '4bdb0fe752094e7daff91062f5513534'; // Get from https://newsapi.org/
-                const response = await fetch(`https://newsapi.org/v2/top-headlines?category=${category}&apiKey=${apiKey}`);
-                
-                if (!response.ok) {
-                    throw new Error(`News API error: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                return data.articles || [];
-            } catch (error) {
-                console.error('Error fetching from News API:', error);
-                
-                // Fallback to NewsData.io if available
-                try {
-                    const newsDataApiKey = 'pub_32c02109e1984bc9a6ecc79a92a75b83'; // Get from https://newsdata.io/
-                    const response = await fetch(`https://newsdata.io/api/1/news?apikey=${newsDataApiKey}&category=${category}`);
-                    
-                    if (!response.ok) {
-                        throw new Error('Both news APIs failed');
-                    }
-                    
-                    const data = await response.json();
-                    return data.results || [];
-                } catch (fallbackError) {
-                    console.error('Fallback news API also failed:', fallbackError);
-                    throw new Error('Could not fetch news from any source');
-                }
-            }
-        }
-
-        // Render news to the page
-        function renderNews(container, news) {
-            const newsHTML = `
-                <div class="news-grid">
-                    ${news.slice(0, 9).map(item => `
-                        <div class="news-card">
-                            <div class="news-image">
-                                <img src="${item.urlToImage || item.image_url || 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}" 
-                                     alt="${item.title}" 
-                                     onerror="this.src='https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
-                                <span class="news-category">${item.category || 'General'}</span>
-                            </div>
-                            <div class="news-content">
-                                <h3><a href="${item.url}" target="_blank" rel="noopener">${item.title}</a></h3>
-                                <p>${item.description || 'No description available.'}</p>
-                                <div class="news-meta">
-                                    <span class="news-time">${formatTimeAgo(item.publishedAt || item.pubDate)}</span>
-                                    <span class="news-source">${item.source?.name || 'Unknown Source'}</span>
-                                </div>
-                            </div>
+        // Load calendar data
+        async function loadCalendarData() {
+            // This would fetch from your Forex Factory API endpoint
+            const response = await fetch(FOREX_FACTORY_ENDPOINTS.calendar);
+            const data = await response.json();
+            
+            // Render calendar (simplified example)
+            const calendarHtml = `
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <h3>Economic Calendar</h3>
+                        <div class="calendar-nav">
+                            <button class="btn-secondary btn-small" onclick="changeCalendarMonth(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span>November 2023</span>
+                            <button class="btn-secondary btn-small" onclick="changeCalendarMonth(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
-                    `).join('')}
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day header">Sun</div>
+                        <div class="calendar-day header">Mon</div>
+                        <div class="calendar-day header">Tue</div>
+                        <div class="calendar-day header">Wed</div>
+                        <div class="calendar-day header">Thu</div>
+                        <div class="calendar-day header">Fri</div>
+                        <div class="calendar-day header">Sat</div>
+                        ${renderCalendarDays(data)}
+                    </div>
                 </div>
             `;
             
-            container.innerHTML = newsHTML;
+            document.getElementById('calendar').innerHTML = calendarHtml;
         }
 
-        // Format time ago
-        function formatTimeAgo(dateString) {
-            if (!dateString) return 'Unknown time';
-            
-            const date = new Date(dateString);
-            const now = new Date();
-            const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / (1000 * 60));
-            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-            
-            if (diffMins < 60) {
-                return `${diffMins} min ago`;
-            } else if (diffHours < 24) {
-                return `${diffHours} hr ago`;
-            } else {
-                return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+        // Render calendar days (simplified)
+        function renderCalendarDays(data) {
+            let html = '';
+            // This would generate the actual calendar grid with events
+            for (let i = 0; i < 35; i++) {
+                html += `<div class="calendar-day">${i < 30 ? i + 1 : ''}</div>`;
             }
+            return html;
         }
 
-        // Setup news filters
-        function setupNewsFilters() {
-            const filterButtons = document.querySelectorAll('.news-filter-btn');
+        // Load event list
+        async function loadEventList() {
+            const response = await fetch(FOREX_FACTORY_ENDPOINTS.eventList);
+            const events = await response.json();
             
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const category = this.getAttribute('data-category');
+            const tableHtml = `
+                <div class="event-table-container">
+                    <table class="event-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Currency</th>
+                                <th>Event</th>
+                                <th>Impact</th>
+                                <th>Actual</th>
+                                <th>Forecast</th>
+                                <th>Previous</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${events.map(event => `
+                                <tr>
+                                    <td>${event.time}</td>
+                                    <td>${event.currency}</td>
+                                    <td>${event.name}</td>
+                                    <td><span class="impact-${event.impact.toLowerCase()}">${event.impact}</span></td>
+                                    <td>${event.actual || '-'}</td>
+                                    <td>${event.forecast || '-'}</td>
+                                    <td>${event.previous || '-'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            document.getElementById('event-list').innerHTML = tableHtml;
+        }
+
+        // Load other data functions would follow similar patterns...
+
+        // Tab switching functionality
+        function setupTabs() {
+            const tabs = document.querySelectorAll('.news-tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
                     
-                    // Update active button
-                    filterButtons.forEach(b => b.classList.remove('active'));
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Load news for selected category
-                    loadNews(category);
+                    // Hide all tab contents
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show selected tab content
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Load data for this tab if not already loaded
+                    if (tabId !== activeTab) {
+                        activeTab = tabId;
+                        loadTabData(tabId);
+                    }
                 });
             });
         }
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Load initial news
-            loadNews('business');
+            // Setup tabs
+            setupTabs();
             
-            // Setup filters
-            setupNewsFilters();
+            // Load initial tab data
+            loadTabData('calendar');
             
             // Mobile menu toggle
             const hamburger = document.querySelector('.hamburger');
@@ -467,6 +593,27 @@
                 });
             }
         });
+
+        // Placeholder functions for other endpoints
+        async function loadEventHistory() {
+            // Implementation for event history
+        }
+
+        async function loadMLAnalysis() {
+            // Implementation for ML analysis
+        }
+
+        async function loadSmartAnalysis() {
+            // Implementation for smart analysis
+        }
+
+        async function loadGPTInsights() {
+            // Implementation for GPT insights
+        }
+
+        function changeCalendarMonth(direction) {
+            // Implementation for calendar navigation
+        }
     </script>
 </body>
 </html>
