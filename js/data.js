@@ -1,173 +1,155 @@
-// data.js - Real market data from Yahoo Finance
-const MARKET_SYMBOLS = {
-    crypto: ['BTC-USD', 'ETH-USD', 'SOL-USD', 'BNB-USD', 'XRP-USD', 'ADA-USD', 'DOGE-USD', 'AVAX-USD'],
-    forex: ['EURUSD=X', 'GBPUSD=X', 'JPY=X', 'AUDUSD=X', 'CADUSD=X', 'CHFUSD=X', 'CNYUSD=X', 'NZDUSD=X'],
-    indices: ['^GSPC', '^DJI', '^IXIC', '^RUT', '^FTSE', '^N225', '^HSI', '^STOXX50E'],
-    commodities: ['GC=F', 'SI=F', 'CL=F', 'NG=F', 'ZC=F', 'ZS=F', 'KE=F', 'HG=F']
-};
+// data.js - Real Forex Factory data integration
+const PROXY_BASE_URL = 'http://localhost:3001/api';
 
-// Initialize market data
-async function initMarketData() {
-    // Load crypto data by default on homepage
-    if (document.getElementById('crypto')) {
-        await loadMarketData('crypto');
-    }
-}
-
-// Load market data for a specific category
-async function loadMarketData(marketType) {
-    const container = document.getElementById(marketType);
-    if (!container) return;
-    
-    // Show loading state
-    container.innerHTML = `
-        <div class="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            Loading ${marketType} data...
-        </div>
-    `;
-    
+// Forex Factory data functions
+async function loadRealForexFactoryData() {
     try {
-        const symbols = MARKET_SYMBOLS[marketType];
-        const data = await fetchYahooFinanceData(symbols);
-        
-        if (data && data.length > 0) {
-            renderMarketData(container, data, marketType);
-        } else {
-            container.innerHTML = `
-                <div class="error">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Failed to load ${marketType} data
-                </div>
-            `;
+        // Test proxy connection first
+        const healthCheck = await fetch(`${PROXY_BASE_URL}/health`);
+        if (!healthCheck.ok) {
+            throw new Error('Proxy server is not running');
         }
+
+        // Load calendar data
+        const response = await fetch(`${PROXY_BASE_URL}/forexfactory/calendar`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        return processForexFactoryData(data);
+        
     } catch (error) {
-        console.error(`Error loading ${marketType} data:`, error);
-        container.innerHTML = `
-            <div class="error">
-                <i class="fas fa-exclamation-triangle"></i>
-                Error loading ${marketType} data
-            </div>
-        `;
+        console.error('Error loading Forex Factory data:', error);
+        throw error;
     }
 }
 
-// Fetch data from Yahoo Finance API
-async function fetchYahooFinanceData(symbols) {
+// Process Forex Factory XML data
+function processForexFactoryData(data) {
+    // The structure will depend on the actual XML format from Forex Factory
+    // This is a generic implementation that may need adjustment
+    
+    const events = [];
+    
     try {
-        // Using Yahoo Finance API through a CORS proxy
-        const promises = symbols.map(symbol => {
-            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1d`;
+        // Extract events from the XML structure
+        // Note: This structure might need adjustment based on the actual XML format
+        if (data && data.weeklyevents && data.weeklyevents.event) {
+            const eventsData = Array.isArray(data.weeklyevents.event) ? 
+                data.weeklyevents.event : [data.weeklyevents.event];
             
-            return fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    if (!data.chart || !data.chart.result) return null;
-                    
-                    const result = data.chart.result[0];
-                    const meta = result.meta;
-                    const previousClose = meta.previousClose;
-                    const currentPrice = meta.regularMarketPrice;
-                    const change = currentPrice - previousClose;
-                    const changePercent = (change / previousClose) * 100;
-                    
-                    return {
-                        symbol: symbol,
-                        name: getSymbolName(symbol),
-                        price: currentPrice,
-                        change: change,
-                        changePercent: changePercent,
-                        previousClose: previousClose,
-                        volume: meta.regularMarketVolume || 0
-                    };
-                })
-                .catch(error => {
-                    console.error(`Error fetching data for ${symbol}:`, error);
-                    return null;
-                });
-        });
+            eventsData.forEach(event => {
+                // Parse event data based on Forex Factory's XML structure
+                const eventData = {
+                    id: event.$.id || generateId(),
+                    date: parseDate(event.$.date, event.$.time),
+                    time: event.$.time,
+                    currency: event.$.currency || 'USD',
+                    title: event.title || 'Economic Event',
+                    impact: parseImpact(event.impact),
+                    actual: event.actual || null,
+                    forecast: event.forecast || null,
+                    previous: event.previous || null,
+                    country: event.$.country || ''
+                };
+                
+                events.push(eventData);
+            });
+        }
         
-        const results = await Promise.all(promises);
-        return results.filter(item => item !== null);
-        
+        return events;
     } catch (error) {
-        console.error('Error in fetchYahooFinanceData:', error);
-        return null;
+        console.error('Error processing Forex Factory data:', error);
+        return [];
     }
 }
 
-// Get display name for symbol
-function getSymbolName(symbol) {
-    const symbolNames = {
-        'BTC-USD': 'Bitcoin',
-        'ETH-USD': 'Ethereum',
-        'SOL-USD': 'Solana',
-        'BNB-USD': 'Binance Coin',
-        'XRP-USD': 'Ripple',
-        'ADA-USD': 'Cardano',
-        'DOGE-USD': 'Dogecoin',
-        'AVAX-USD': 'Avalanche',
-        'EURUSD=X': 'EUR/USD',
-        'GBPUSD=X': 'GBP/USD',
-        'JPY=X': 'USD/JPY',
-        'AUDUSD=X': 'AUD/USD',
-        'CADUSD=X': 'CAD/USD',
-        'CHFUSD=X': 'CHF/USD',
-        'CNYUSD=X': 'CNY/USD',
-        'NZDUSD=X': 'NZD/USD',
-        '^GSPC': 'S&P 500',
-        '^DJI': 'Dow Jones',
-        '^IXIC': 'NASDAQ',
-        '^RUT': 'Russell 2000',
-        '^FTSE': 'FTSE 100',
-        '^N225': 'Nikkei 225',
-        '^HSI': 'Hang Seng',
-        '^STOXX50E': 'STOXX 50',
-        'GC=F': 'Gold',
-        'SI=F': 'Silver',
-        'CL=F': 'Crude Oil',
-        'NG=F': 'Natural Gas',
-        'ZC=F': 'Corn',
-        'ZS=F': 'Soybeans',
-        'KE=F': 'Wheat',
-        'HG=F': 'Copper'
-    };
-    
-    return symbolNames[symbol] || symbol;
+// Helper functions
+function parseDate(dateString, timeString) {
+    try {
+        // Parse Forex Factory date format (adjust as needed)
+        const [month, day, year] = dateString.split('/');
+        const [time, period] = timeString.split(' ');
+        const [hours, minutes] = time.split(':');
+        
+        let hour = parseInt(hours);
+        if (period === 'pm' && hour < 12) hour += 12;
+        if (period === 'am' && hour === 12) hour = 0;
+        
+        return new Date(year, month - 1, day, hour, parseInt(minutes || 0));
+    } catch (error) {
+        console.warn('Error parsing date:', error);
+        return new Date();
+    }
 }
 
-// Render market data to the page
-function renderMarketData(container, data, marketType) {
-    const tableHTML = `
-        <div class="market-table">
-            <div class="table-row header">
-                <div class="table-cell">Symbol</div>
-                <div class="table-cell">Price</div>
-                <div class="table-cell">Change</div>
-                <div class="table-cell">Change %</div>
-                <div class="table-cell">Volume</div>
-            </div>
-            ${data.map(item => `
-                <div class="table-row">
-                    <div class="table-cell">
-                        <span class="symbol-name">${item.name}</span>
-                        <span class="symbol-ticker">${item.symbol}</span>
-                    </div>
-                    <div class="table-cell">${formatCurrency(item.price, item.symbol.includes('=X') || item.symbol.includes('JPY=') ? 4 : 2)}</div>
-                    <div class="table-cell ${item.change >= 0 ? 'positive' : 'negative'}">
-                        ${item.change >= 0 ? '+' : ''}${formatCurrency(item.change, item.symbol.includes('=X') || item.symbol.includes('JPY=') ? 4 : 2)}
-                    </div>
-                    <div class="table-cell ${item.changePercent >= 0 ? 'positive' : 'negative'}">
-                        ${item.changePercent >= 0 ? '+' : ''}${formatNumber(item.changePercent)}%
-                    </div>
-                    <div class="table-cell">${formatNumber(item.volume)}</div>
-                </div>
-            `).join('')}
-        </div>
-    `;
-    
-    container.innerHTML = tableHTML;
+function parseImpact(impact) {
+    const impactStr = String(impact || '').toLowerCase();
+    if (impactStr.includes('high')) return 'High';
+    if (impactStr.includes('medium')) return 'Medium';
+    if (impactStr.includes('low')) return 'Low';
+    return 'Low';
 }
+
+function generateId() {
+    return 'event-' + Math.random().toString(36).substr(2, 9);
+}
+
+// Load different weeks
+async function loadCalendarWeek(week) {
+    try {
+        const weekParam = week || 'this';
+        const response = await fetch(`${PROXY_BASE_URL}/forexfactory/calendar?week=${weekParam}`);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load ${week} week data`);
+        }
+        
+        const data = await response.json();
+        return processForexFactoryData(data);
+    } catch (error) {
+        console.error(`Error loading ${week} week data:`, error);
+        throw error;
+    }
+}
+
+// Get event details
+async function getEventDetails(eventId) {
+    try {
+        const response = await fetch(`${PROXY_BASE_URL}/forexfactory/event/${eventId}`);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load event ${eventId}`);
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error(`Error loading event ${eventId}:`, error);
+        throw error;
+    }
+}
+
+// Get event history
+async function getEventHistory(eventId) {
+    try {
+        const response = await fetch(`${PROXY_BASE_URL}/forexfactory/history/${eventId}`);
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load history for event ${eventId}`);
+        }
+        
+        return await response.json();
+    } catch (error) {
+        console.error(`Error loading history for event ${eventId}:`, error);
+        throw error;
+    }
+}
+
+// Export functions for use in main.js
+window.ForexFactoryAPI = {
+    loadRealForexFactoryData,
+    loadCalendarWeek,
+    getEventDetails,
+    getEventHistory
+};
