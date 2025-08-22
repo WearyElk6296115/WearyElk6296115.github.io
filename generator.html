@@ -7,6 +7,98 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Generator-specific styles */
+        .generator-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 200px);
+            gap: 20px;
+        }
+        
+        .generator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: var(--background-alt);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--secondary);
+        }
+        
+        .status-indicator.connected {
+            background: var(--success);
+        }
+        
+        .status-indicator.error {
+            background: var(--danger);
+        }
+        
+        .generator-frame-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        
+        .frame-header {
+            padding: 15px 20px;
+            background: var(--background-alt);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #generator-frame {
+            width: 100%;
+            flex: 1;
+            border: none;
+            background: white;
+        }
+        
+        .generator-controls {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .generator-container {
+                height: calc(100vh - 150px);
+            }
+            
+            .generator-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .connection-status {
+                align-self: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -36,69 +128,28 @@
         </div>
     </nav>
 
-    <!-- Generator Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>MMXM Signal Generator</h1>
-            <p>Advanced multi-market trading signal generation with real-time analysis</p>
-        </div>
-    </section>
-
     <!-- Generator Content -->
     <section class="generator-content">
         <div class="container">
             <div class="generator-container">
-                <div class="generator-info">
-                    <h2>Live Signal Generation</h2>
-                    <p>Our advanced MMXM algorithm analyzes multiple timeframes and market conditions to generate high-probability trading signals.</p>
-                    
-                    <div class="generator-stats">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3>Multi-Market</h3>
-                                <p>Crypto, Forex, Stocks & Futures</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3>AI-Powered</h3>
-                                <p>Machine Learning Algorithms</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <i class="fas fa-bolt"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h3>Real-Time</h3>
-                                <p>Instant Signal Generation</p>
-                            </div>
-                        </div>
+                <div class="generator-header">
+                    <div>
+                        <h1>MMXM Signal Generator</h1>
+                        <p>Advanced multi-market trading signal generation</p>
                     </div>
-
-                    <div class="generator-instructions">
-                        <h3>How to Use:</h3>
-                        <ol>
-                            <li>Ensure your signal generator server is running at http://localhost:8501</li>
-                            <li>The generator will automatically connect to your local server</li>
-                            <li>Use the interface to configure signal parameters</li>
-                            <li>Monitor real-time signal generation and analysis</li>
-                        </ol>
+                    <div class="connection-status">
+                        <span class="status-indicator" id="status-indicator"></span>
+                        <span id="status-text">Connecting to server...</span>
                     </div>
                 </div>
 
                 <div class="generator-frame-container">
                     <div class="frame-header">
-                        <h3>MMXM Signal Generator Interface</h3>
-                        <div class="connection-status">
-                            <span class="status-indicator" id="status-indicator"></span>
-                            <span id="status-text">Connecting...</span>
+                        <h3>Live Signal Generator Interface</h3>
+                        <div class="frame-actions">
+                            <button class="btn-secondary btn-small" onclick="refreshFrame()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
                         </div>
                     </div>
                     <iframe 
@@ -108,6 +159,18 @@
                         allowfullscreen
                         title="MMXM Signal Generator"
                     ></iframe>
+                </div>
+
+                <div class="generator-controls">
+                    <button class="btn-primary" onclick="openInNewTab()">
+                        <i class="fas fa-external-link-alt"></i> Open in New Tab
+                    </button>
+                    <button class="btn-secondary" onclick="checkConnection()">
+                        <i class="fas fa-plug"></i> Check Connection
+                    </button>
+                    <div class="control-info">
+                        <small>Server: http://localhost:8501</small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,6 +219,91 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="js/main.js"></script>
+    <script>
+        // Initialize the generator frame
+        function initGenerator() {
+            const frame = document.getElementById('generator-frame');
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status-text');
+            
+            if (frame) {
+                // Set the frame source to your local server
+                frame.src = 'http://localhost:8501';
+                
+                // Add event listeners for connection status
+                frame.addEventListener('load', function() {
+                    statusIndicator.className = 'status-indicator connected';
+                    statusText.textContent = 'Connected to server';
+                    console.log('Signal generator loaded successfully');
+                });
+                
+                frame.addEventListener('error', function() {
+                    statusIndicator.className = 'status-indicator error';
+                    statusText.textContent = 'Connection failed';
+                    console.error('Failed to load signal generator');
+                    
+                    // Show error message in frame
+                    frame.contentDocument.body.innerHTML = `
+                        <div style="padding: 20px; text-align: center; color: #666;">
+                            <h3>Signal Generator Unavailable</h3>
+                            <p>Please ensure your signal generator server is running at http://localhost:8501</p>
+                            <button onclick="window.location.reload()" style="padding: 10px 20px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                Retry Connection
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+        }
+        
+        // Refresh the frame
+        function refreshFrame() {
+            const frame = document.getElementById('generator-frame');
+            if (frame) {
+                frame.src = frame.src; // Reload the frame
+            }
+        }
+        
+        // Open in new tab
+        function openInNewTab() {
+            window.open('http://localhost:8501', '_blank');
+        }
+        
+        // Check connection status
+        function checkConnection() {
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status-text');
+            
+            statusIndicator.className = 'status-indicator';
+            statusText.textContent = 'Checking connection...';
+            
+            // Test the connection
+            fetch('http://localhost:8501', { mode: 'no-cors' })
+                .then(() => {
+                    statusIndicator.className = 'status-indicator connected';
+                    statusText.textContent = 'Connection successful';
+                })
+                .catch(() => {
+                    statusIndicator.className = 'status-indicator error';
+                    statusText.textContent = 'Connection failed';
+                });
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initGenerator();
+            
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
