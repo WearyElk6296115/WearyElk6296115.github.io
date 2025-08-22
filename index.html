@@ -1,16 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trading Hub</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin: 40px; }
-    h1 { font-size: 3em; color: #333; }
-    p { font-size: 1.2em; }
+    /* Reset & base styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f9f9f9; color: #111; }
+    header { background: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; }
+    header h1 { font-size: 1.5em; font-weight: 600; }
+    nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: #0070f3; }
+    section { padding: 80px 20px; max-width: 1000px; margin: auto; text-align: center; }
+    h2 { font-size: 2.2em; margin-bottom: 20px; }
+    p { font-size: 1.1em; color: #555; margin-bottom: 20px; }
+    .btn { display: inline-block; padding: 12px 24px; background: #0070f3; color: #fff; border-radius: 8px; font-weight: 600; text-decoration: none; transition: background 0.3s; }
+    .btn:hover { background: #0059c1; }
+    footer { background: #111; color: #fff; text-align: center; padding: 40px 20px; margin-top: 40px; }
+    footer p { color: #aaa; font-size: 0.9em; }
+    /* Layout helpers */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
+    .card { background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: left; }
+    .card h3 { margin-bottom: 10px; font-size: 1.3em; }
+    .card p { font-size: 1em; color: #666; }
   </style>
 </head>
 <body>
-  <h1>🚀 Trading Hub</h1>
-  <p>Crypto • Forex • Futures • Signals</p>
-  <p>Modern Apple-style design coming soon.</p>
+
+  <!-- Header -->
+  <header>
+    <h1>Trading Hub</h1>
+    <nav>
+      <a href="#signals">Signals</a>
+      <a href="#news">News</a>
+      <a href="#markets">Markets</a>
+      <a href="#education">Education</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section>
+    <h2>🚀 Smart Trading. Simplified.</h2>
+    <p>Your one-stop hub for Crypto, Forex, and Futures signals, news, and market analysis.</p>
+    <a href="#signals" class="btn">View Signals</a>
+  </section>
+
+  <!-- Signals -->
+  <section id="signals">
+    <h2>📈 Live Trading Signals</h2>
+    <p>Stay ahead of the market with real-time signals from our servers.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>BTC/USDT</h3>
+        <p>Buy at 42,500 | Target 43,200 | SL 41,800</p>
+      </div>
+      <div class="card">
+        <h3>EUR/USD</h3>
+        <p>Sell at 1.0930 | Target 1.0890 | SL 1.0960</p>
+      </div>
+      <div class="card">
+        <h3>S&P 500 Futures</h3>
+        <p>Buy at 4970 | Target 4995 | SL 4955</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news">
+    <h2>📰 Latest News</h2>
+    <p>Curated updates from crypto, forex, and global markets.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Crypto</h3>
+        <p>Bitcoin breaks $43K as altcoins surge.</p>
+      </div>
+      <div class="card">
+        <h3>Forex</h3>
+        <p>USD weakens as Fed signals policy shift.</p>
+      </div>
+      <div class="card">
+        <h3>Futures</h3>
+        <p>Stock futures rise ahead of earnings reports.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Markets -->
+  <section id="markets">
+    <h2>🌍 Markets</h2>
+    <p>Track live prices and market trends across all asset classes.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>BTC/USD</h3>
+        <p>$42,750</p>
+      </div>
+      <div class="card">
+        <h3>EUR/USD</h3>
+        <p>1.0912</p>
+      </div>
+      <div class="card">
+        <h3>S&P 500</h3>
+        <p>4,980</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <h2>🎓 Learn & Grow</h2>
+    <p>Master trading strategies, risk management, and technical analysis.</p>
+    <a href="#" class="btn">Explore Guides</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h2>Trading Hub</h2>
+    <p>© 2025 Trading Hub. All rights reserved.</p>
+  </footer>
+
 </body>
 </html>
