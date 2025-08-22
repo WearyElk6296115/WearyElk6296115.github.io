@@ -68,7 +68,7 @@ async function fetchNewsData(category) {
 async function fetchNewsDataIO(category) {
     try {
         // Sign up at https://newsdata.io/ for API key
-        const apiKey = '4bdb0fe752094e7daff91062f5513534'; // Replace with your actual API key
+        const apiKey = 'pub_32c02109e1984bc9a6ecc79a92a75b83'; // Replace with your actual API key
         const response = await fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&category=${category}`);
         
         if (!response.ok) {
