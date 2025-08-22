@@ -7,38 +7,72 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Trading Hub</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="signals.html">Signals</a>
-      <a href="news.html">News</a>
-      <a href="markets.html">Markets</a>
-      <a href="education.html">Education</a>
-    </nav>
-  </header>
 
-  <section>
-    <h2>🌍 Markets</h2>
-    <p>Track live prices and market trends.</p>
-    <div class="grid">
-      <div class="card">
-        <h3>BTC/USD</h3>
-        <p>$42,750</p>
-      </div>
-      <div class="card">
-        <h3>EUR/USD</h3>
-        <p>1.0912</p>
-      </div>
-      <div class="card">
-        <h3>S&P 500</h3>
-        <p>4,980</p>
-      </div>
+<header>
+  <h1>Trading Hub</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="signals.html">Signals</a>
+    <a href="news.html">News</a>
+    <a href="markets.html">Markets</a>
+    <a href="education.html">Education</a>
+  </nav>
+</header>
+
+<section>
+  <h2>🌍 Markets Overview</h2>
+  <p>Track major market prices across Crypto, Forex, and Futures.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>BTC/USD</h3>
+      <p id="btc-price">Loading...</p>
     </div>
-  </section>
+    <div class="card">
+      <h3>ETH/USD</h3>
+      <p id="eth-price">Loading...</p>
+    </div>
+    <div class="card">
+      <h3>EUR/USD</h3>
+      <p id="eurusd-price">Loading...</p>
+    </div>
+    <div class="card">
+      <h3>S&P 500 Futures</h3>
+      <p id="sp500-price">Loading...</p>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <p>© 2025 Trading Hub. All rights reserved.</p>
-  </footer>
+<footer>
+  <p>© 2025 Trading Hub. All rights reserved.</p>
+</footer>
+
+<script>
+// Fetch live prices from Yahoo Finance unofficial API
+async function fetchPrices() {
+  try {
+    const symbols = 'BTC-USD,ETH-USD,EURUSD=X,ES=F';
+    const res = await fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`);
+    const data = await res.json();
+    const quotes = data.quoteResponse.result;
+
+    document.getElementById('btc-price').innerText = `$${quotes.find(q => q.symbol==='BTC-USD').regularMarketPrice}`;
+    document.getElementById('eth-price').innerText = `$${quotes.find(q => q.symbol==='ETH-USD').regularMarketPrice}`;
+    document.getElementById('eurusd-price').innerText = quotes.find(q => q.symbol==='EURUSD=X').regularMarketPrice;
+    document.getElementById('sp500-price').innerText = quotes.find(q => q.symbol==='ES=F').regularMarketPrice;
+
+  } catch (err) {
+    console.error('Error fetching market data:', err);
+    document.querySelectorAll('.card p').forEach(p => p.innerText = 'Error loading data');
+  }
+}
+
+// Fetch prices on load
+fetchPrices();
+
+// Optional: refresh every 60 seconds
+setInterval(fetchPrices, 60000);
+</script>
+
 </body>
 </html>
