@@ -1,31 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trading Hub - Home</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarketPulse Pro | Modern Trading Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>Trading Hub</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="signals.html">Signals</a>
-      <a href="news.html">News</a>
-      <a href="markets.html">Markets</a>
-      <a href="education.html">Education</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-chart-line"></i>
+                <span>MarketPulse Pro</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="news.html" class="nav-link">News</a>
+                <a href="signals.html" class="nav-link">Signals</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link">Markets <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="crypto.html">Cryptocurrency</a>
+                        <a href="forex.html">Forex</a>
+                        <a href="futures.html">Futures</a>
+                    </div>
+                </div>
+                <a href="#" class="nav-link">Resources</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary">Login</button>
+                <button class="btn-primary">Sign Up</button>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
     </nav>
-  </header>
 
-  <section class="hero">
-    <h2>🚀 Smart Trading. Simplified.</h2>
-    <p>Your one-stop hub for Crypto, Forex, and Futures signals, news, and market analysis.</p>
-    <a href="signals.html" class="btn">View Signals</a>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Intelligent Trading <span class="gradient-text">Signals</span> for Modern Investors</h1>
+            <p>Advanced multi-market analysis with institutional-grade insights for crypto, forex, and futures markets.</p>
+            <div class="hero-actions">
+                <button class="btn-primary btn-large">Explore Signals</button>
+                <button class="btn-secondary btn-large">Live Demo</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="market-cards" id="live-market-cards">
+                <div class="market-card">
+                    <div class="card-header">
+                        <span class="card-title">Loading...</span>
+                        <span class="price-change">--</span>
+                    </div>
+                    <div class="card-price">--</div>
+                    <div class="card-graph">
+                        <div class="graph-line" style="height: 50%;"></div>
+                    </div>
+                </div>
+                <div class="market-card">
+                    <div class="card-header">
+                        <span class="card-title">Loading...</span>
+                        <span class="price-change">--</span>
+                    </div>
+                    <div class="card-price">--</div>
+                    <div class="card-graph">
+                        <div class="graph-line" style="height: 50%;"></div>
+                    </div>
+                </div>
+                <div class="market-card">
+                    <div class="card-header">
+                        <span class="card-title">Loading...</span>
+                        <span class="price-change">--</span>
+                    </div>
+                    <div class="card-price">--</div>
+                    <div class="card-graph">
+                        <div class="graph-line" style="height: 50%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2025 Trading Hub. All rights reserved.</p>
-  </footer>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Traders Choose Our Signals</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Our advanced algorithms analyze multiple timeframes and market conditions to generate high-probability signals.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-Time Alerts</h3>
+                    <p>Get instant notifications for entry points, stop losses, and take profit targets across all markets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Multi-Market Coverage</h3>
+                    <p>From cryptocurrencies to futures and forex, we cover all major markets with specialized strategies.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Risk Management</h3>
+                    <p>Every signal includes detailed risk assessment and position sizing recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Overview Section -->
+    <section class="market-overview">
+        <div class="container">
+            <div class="section-header">
+                <h2>Market Overview</h2>
+                <a href="markets.html" class="view-all">View All Markets <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="crypto">Crypto</button>
+                <button class="tab-btn" data-tab="forex">Forex</button>
+                <button class="tab-btn" data-tab="futures">Futures</button>
+                <button class="tab-btn" data-tab="indices">Indices</button>
+            </div>
+            <div class="tab-content active" id="crypto">
+                <div class="market-table">
+                    <div class="table-row header">
+                        <div class="table-cell">Symbol</div>
+                        <div class="table-cell">Price</div>
+                        <div class="table-cell">24h Change</div>
+                        <div class="table-cell">Volume (24h)</div>
+                        <div class="table-cell">Signal</div>
+                    </div>
+                    <div id="crypto-data">
+                        <div class="table-row loading">
+                            <div class="table-cell">Loading data...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="news-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2>Latest Market News</h2>
+                <a href="news.html" class="view-all">View All News <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="news-grid" id="news-preview">
+                <div class="news-card">
+                    <div class="news-content">
+                        <h3>Loading latest news...</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MarketPulse Pro</h3>
+                    <p>Advanced trading signals and market analysis for serious investors.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Markets</h4>
+                    <ul>
+                        <li><a href="crypto.html">Cryptocurrency</a></li>
+                        <li><a href="forex.html">Forex</a></li>
+                        <li><a href="futures.html">Futures</a></li>
+                        <li><a href="markets.html">All Markets</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Trading Education</a></li>
+                        <li><a href="#">Market Analysis</a></li>
+                        <li><a href="#">Economic Calendar</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MarketPulse Pro. All rights reserved.</p>
+                <p>Data provided by Yahoo Finance</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/market-data.js"></script>
+    <script src="js/news-loader.js"></script>
 </body>
 </html>
