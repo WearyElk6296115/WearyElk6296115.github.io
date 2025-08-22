@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Generator | MarketPulse Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-chart-line"></i>
+                <span>MarketPulse Pro</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="news.html" class="nav-link">News</a>
+                <a href="signals.html" class="nav-link">Signals</a>
+                <a href="generator.html" class="nav-link active">Generator</a>
+                <a href="markets.html" class="nav-link">Markets</a>
+                <a href="#" class="nav-link">Resources</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary">Login</button>
+                <button class="btn-primary">Sign Up</button>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Generator Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>MMXM Signal Generator</h1>
+            <p>Advanced multi-market trading signal generation with real-time analysis</p>
+        </div>
+    </section>
+
+    <!-- Generator Content -->
+    <section class="generator-content">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-info">
+                    <h2>Live Signal Generation</h2>
+                    <p>Our advanced MMXM algorithm analyzes multiple timeframes and market conditions to generate high-probability trading signals.</p>
+                    
+                    <div class="generator-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Multi-Market</h3>
+                                <p>Crypto, Forex, Stocks & Futures</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>AI-Powered</h3>
+                                <p>Machine Learning Algorithms</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Real-Time</h3>
+                                <p>Instant Signal Generation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="generator-instructions">
+                        <h3>How to Use:</h3>
+                        <ol>
+                            <li>Ensure your signal generator server is running at http://localhost:8501</li>
+                            <li>The generator will automatically connect to your local server</li>
+                            <li>Use the interface to configure signal parameters</li>
+                            <li>Monitor real-time signal generation and analysis</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="generator-frame-container">
+                    <div class="frame-header">
+                        <h3>MMXM Signal Generator Interface</h3>
+                        <div class="connection-status">
+                            <span class="status-indicator" id="status-indicator"></span>
+                            <span id="status-text">Connecting...</span>
+                        </div>
+                    </div>
+                    <iframe 
+                        id="generator-frame" 
+                        src="about:blank"
+                        frameborder="0" 
+                        allowfullscreen
+                        title="MMXM Signal Generator"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>MarketPulse Pro</h3>
+                    <p>Advanced trading signals and market analysis for serious investors.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Markets</h3>
+                    <ul class="footer-links">
+                        <li><a href="markets.html?category=crypto">Cryptocurrency</a></li>
+                        <li><a href="markets.html?category=forex">Forex</a></li>
+                        <li><a href="markets.html?category=indices">Indices</a></li>
+                        <li><a href="markets.html?category=commodities">Commodities</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="signals.html">Trading Signals</a></li>
+                        <li><a href="news.html">Market News</a></li>
+                        <li><a href="generator.html">Signal Generator</a></li>
+                        <li><a href="#">Learning Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MarketPulse Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
