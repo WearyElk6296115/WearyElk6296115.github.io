@@ -20,14 +20,8 @@
                 <a href="index.html" class="nav-link active">Home</a>
                 <a href="news.html" class="nav-link">News</a>
                 <a href="signals.html" class="nav-link">Signals</a>
-                <div class="nav-dropdown">
-                    <a href="#" class="nav-link">Markets <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="crypto.html">Cryptocurrency</a>
-                        <a href="forex.html">Forex</a>
-                        <a href="futures.html">Futures</a>
-                    </div>
-                </div>
+                <a href="generator.html" class="nav-link">Generator</a>
+                <a href="markets.html" class="nav-link">Markets</a>
                 <a href="#" class="nav-link">Resources</a>
             </div>
             <div class="nav-actions">
@@ -48,40 +42,40 @@
             <h1>Intelligent Trading <span class="gradient-text">Signals</span> for Modern Investors</h1>
             <p>Advanced multi-market analysis with institutional-grade insights for crypto, forex, and futures markets.</p>
             <div class="hero-actions">
-                <button class="btn-primary btn-large">Explore Signals</button>
-                <button class="btn-secondary btn-large">Live Demo</button>
+                <a href="signals.html" class="btn-primary btn-large">Explore Signals</a>
+                <a href="generator.html" class="btn-secondary btn-large">Live Generator</a>
             </div>
         </div>
         <div class="hero-visual">
-            <div class="market-cards" id="live-market-cards">
+            <div class="market-cards">
                 <div class="market-card">
                     <div class="card-header">
-                        <span class="card-title">Loading...</span>
-                        <span class="price-change">--</span>
+                        <span class="card-title">BTC/USD</span>
+                        <span class="price-change positive">+2.3%</span>
                     </div>
-                    <div class="card-price">--</div>
+                    <div class="card-price">$37,428.90</div>
                     <div class="card-graph">
-                        <div class="graph-line" style="height: 50%;"></div>
+                        <div class="graph-line" style="height: 70%;"></div>
                     </div>
                 </div>
                 <div class="market-card">
                     <div class="card-header">
-                        <span class="card-title">Loading...</span>
-                        <span class="price-change">--</span>
+                        <span class="card-title">EUR/USD</span>
+                        <span class="price-change negative">-0.4%</span>
                     </div>
-                    <div class="card-price">--</div>
+                    <div class="card-price">1.0924</div>
                     <div class="card-graph">
-                        <div class="graph-line" style="height: 50%;"></div>
+                        <div class="graph-line" style="height: 40%;"></div>
                     </div>
                 </div>
                 <div class="market-card">
                     <div class="card-header">
-                        <span class="card-title">Loading...</span>
-                        <span class="price-change">--</span>
+                        <span class="card-title">S&P 500</span>
+                        <span class="price-change positive">+0.8%</span>
                     </div>
-                    <div class="card-price">--</div>
+                    <div class="card-price">4,567.23</div>
                     <div class="card-graph">
-                        <div class="graph-line" style="height: 50%;"></div>
+                        <div class="graph-line" style="height: 60%;"></div>
                     </div>
                 </div>
             </div>
@@ -135,40 +129,53 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="crypto">Crypto</button>
                 <button class="tab-btn" data-tab="forex">Forex</button>
-                <button class="tab-btn" data-tab="futures">Futures</button>
                 <button class="tab-btn" data-tab="indices">Indices</button>
+                <button class="tab-btn" data-tab="commodities">Commodities</button>
             </div>
             <div class="tab-content active" id="crypto">
-                <div class="market-table">
-                    <div class="table-row header">
-                        <div class="table-cell">Symbol</div>
-                        <div class="table-cell">Price</div>
-                        <div class="table-cell">24h Change</div>
-                        <div class="table-cell">Volume (24h)</div>
-                        <div class="table-cell">Signal</div>
-                    </div>
-                    <div id="crypto-data">
-                        <div class="table-row loading">
-                            <div class="table-cell">Loading data...</div>
-                        </div>
-                    </div>
+                <!-- Crypto data will be loaded here by data.js -->
+            </div>
+            <div class="tab-content" id="forex">
+                <!-- Forex data will be loaded here by data.js -->
+            </div>
+            <div class="tab-content" id="indices">
+                <!-- Indices data will be loaded here by data.js -->
+            </div>
+            <div class="tab-content" id="commodities">
+                <!-- Commodities data will be loaded here by data.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Signals Section -->
+    <section class="signals-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2>Latest Trading Signals</h2>
+                <a href="signals.html" class="view-all">View All Signals <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="signals-grid">
+                <!-- Signals will be loaded here by signals.js -->
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading signals...
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Latest News Section -->
+    <!-- News Section -->
     <section class="news-preview">
         <div class="container">
             <div class="section-header">
-                <h2>Latest Market News</h2>
+                <h2>Market News</h2>
                 <a href="news.html" class="view-all">View All News <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="news-grid" id="news-preview">
-                <div class="news-card">
-                    <div class="news-content">
-                        <h3>Loading latest news...</h3>
-                    </div>
+            <div class="news-grid">
+                <!-- News will be loaded here by loader.js -->
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Loading news...
                 </div>
             </div>
         </div>
@@ -177,48 +184,49 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
+            <div class="footer-grid">
+                <div class="footer-column">
                     <h3>MarketPulse Pro</h3>
                     <p>Advanced trading signals and market analysis for serious investors.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Markets</h4>
-                    <ul>
-                        <li><a href="crypto.html">Cryptocurrency</a></li>
-                        <li><a href="forex.html">Forex</a></li>
-                        <li><a href="futures.html">Futures</a></li>
-                        <li><a href="markets.html">All Markets</a></li>
+                <div class="footer-column">
+                    <h3>Markets</h3>
+                    <ul class="footer-links">
+                        <li><a href="markets.html?category=crypto">Cryptocurrency</a></li>
+                        <li><a href="markets.html?category=forex">Forex</a></li>
+                        <li><a href="markets.html?category=indices">Indices</a></li>
+                        <li><a href="markets.html?category=commodities">Commodities</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Trading Education</a></li>
-                        <li><a href="#">Market Analysis</a></li>
-                        <li><a href="#">Economic Calendar</a></li>
-                        <li><a href="#">Blog</a></li>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="signals.html">Trading Signals</a></li>
+                        <li><a href="news.html">Market News</a></li>
+                        <li><a href="generator.html">Signal Generator</a></li>
+                        <li><a href="#">Learning Center</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2023 MarketPulse Pro. All rights reserved.</p>
-                <p>Data provided by Yahoo Finance</p>
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="js/main.js"></script>
-    <script src="js/market-data.js"></script>
-    <script src="js/news-loader.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/signals.js"></script>
 </body>
 </html>
