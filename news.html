@@ -83,6 +83,21 @@
             background: #f8f9fa;
         }
         
+        .impact-high {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+        
+        .impact-medium {
+            color: #f57c00;
+            font-weight: 600;
+        }
+        
+        .impact-low {
+            color: #388e3c;
+            font-weight: 600;
+        }
+        
         /* Calendar Styles */
         .calendar {
             background: white;
@@ -103,6 +118,7 @@
         .calendar-nav {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
         
         .calendar-grid {
@@ -115,7 +131,8 @@
         .calendar-day {
             background: white;
             padding: 10px;
-            min-height: 100px;
+            min-height: 120px;
+            position: relative;
         }
         
         .calendar-day.header {
@@ -123,15 +140,32 @@
             font-weight: 600;
             text-align: center;
             min-height: auto;
+            padding: 15px 10px;
+        }
+        
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
         }
         
         .event-item {
             background: #e3f2fd;
             border-left: 3px solid var(--primary);
-            padding: 8px;
+            padding: 6px;
             margin-bottom: 5px;
             border-radius: 3px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        
+        .event-item.high {
+            border-left-color: #d32f2f;
+            background: #ffebee;
+        }
+        
+        .event-item.medium {
+            border-left-color: #f57c00;
+            background: #fff3e0;
         }
         
         /* Analysis Cards */
@@ -182,6 +216,45 @@
             color: #1565c0;
         }
         
+        /* Event Modal */
+        .event-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .event-modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .event-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
         /* Loading and Error States */
         .loading, .error {
             text-align: center;
@@ -212,6 +285,21 @@
             
             .analysis-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                font-size: 0.8rem;
+            }
+            
+            .calendar-day {
+                min-height: 100px;
+                padding: 5px;
+            }
+            
+            .event-item {
+                font-size: 0.7rem;
+                padding: 4px;
             }
         }
     </style>
@@ -248,7 +336,7 @@
     <section class="news-header">
         <div class="container">
             <h1>Forex Factory News & Analysis</h1>
-            <p>Real-time economic events, analysis, and trading insights</p>
+            <p>Economic events, analysis, and trading insights</p>
         </div>
     </section>
 
@@ -258,10 +346,7 @@
             <div class="news-tabs">
                 <button class="news-tab active" data-tab="calendar">Calendar</button>
                 <button class="news-tab" data-tab="event-list">Event List</button>
-                <button class="news-tab" data-tab="event-history">Event History</button>
-                <button class="news-tab" data-tab="ml-analysis">ML Analysis</button>
-                <button class="news-tab" data-tab="smart-analysis">Smart Analysis</button>
-                <button class="news-tab" data-tab="gpt-insights">GPT Insights</button>
+                <button class="news-tab" data-tab="analysis">Analysis</button>
             </div>
         </div>
     </section>
@@ -275,9 +360,13 @@
                     <div class="calendar-header">
                         <h3>Economic Calendar</h3>
                         <div class="calendar-nav">
-                            <button class="btn-secondary btn-small"><i class="fas fa-chevron-left"></i></button>
-                            <span>November 2023</span>
-                            <button class="btn-secondary btn-small"><i class="fas fa-chevron-right"></i></button>
+                            <button class="btn-secondary btn-small" id="prev-month">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span id="current-month">November 2023</span>
+                            <button class="btn-secondary btn-small" id="next-month">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="loading">
@@ -290,7 +379,7 @@
             <!-- Event List Tab -->
             <div class="tab-content" id="event-list">
                 <div class="news-container">
-                    <h3>Economic Events</h3>
+                    <h3>This Week's Economic Events</h3>
                     <div class="loading">
                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                         <p>Loading event list...</p>
@@ -298,57 +387,33 @@
                 </div>
             </div>
 
-            <!-- Event History Tab -->
-            <div class="tab-content" id="event-history">
+            <!-- Analysis Tab -->
+            <div class="tab-content" id="analysis">
                 <div class="news-container">
-                    <h3>Event Historical Analysis</h3>
-                    <div class="loading">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
-                        <p>Loading event history...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ML Analysis Tab -->
-            <div class="tab-content" id="ml-analysis">
-                <div class="news-container">
-                    <h3>Machine Learning Predictions</h3>
+                    <h3>Market Analysis & Insights</h3>
                     <div class="analysis-grid">
                         <div class="loading" style="grid-column: 1 / -1;">
                             <i class="fas fa-spinner fa-spin fa-2x"></i>
-                            <p>Loading ML analysis...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Smart Analysis Tab -->
-            <div class="tab-content" id="smart-analysis">
-                <div class="news-container">
-                    <h3>Smart Analysis</h3>
-                    <div class="analysis-grid">
-                        <div class="loading" style="grid-column: 1 / -1;">
-                            <i class="fas fa-spinner fa-spin fa-2x"></i>
-                            <p>Loading smart analysis...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GPT Insights Tab -->
-            <div class="tab-content" id="gpt-insights">
-                <div class="news-container">
-                    <h3>GPT Market Insights & Education</h3>
-                    <div class="analysis-grid">
-                        <div class="loading" style="grid-column: 1 / -1;">
-                            <i class="fas fa-spinner fa-spin fa-2x"></i>
-                            <p>Loading GPT insights...</p>
+                            <p>Loading market analysis...</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Event Modal -->
+    <div class="event-modal" id="event-modal">
+        <div class="event-modal-content">
+            <div class="event-modal-header">
+                <h3 id="modal-event-title">Event Details</h3>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div id="modal-event-content">
+                <!-- Event details will be loaded here -->
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -394,20 +459,16 @@
 
     <!-- JavaScript -->
     <script>
-        // Forex Factory API endpoints (example structure)
-        const FOREX_FACTORY_ENDPOINTS = {
-            eventList: '/api/forexfactory/events',
-            eventInfo: '/api/forexfactory/event/', // + eventId
-            eventHistory: '/api/forexfactory/history/', // + eventId
-            mlAnalysis: '/api/forexfactory/ml-analysis',
-            smartAnalysis: '/api/forexfactory/smart-analysis',
-            fullEventList: '/api/forexfactory/full-events',
-            calendar: '/api/forexfactory/calendar',
-            gptInsights: '/api/forexfactory/gpt-insights'
+        // Forex Factory weekly data files (example URLs)
+        const FOREX_FACTORY_URLS = {
+            weeklyCalendar: 'https://cdn.forexfactory.com/ff_calendar_thisweek.xml',
+            // These would be URLs to the weekly files Forex Factory provides
+            // You might need to set up a proxy server to fetch these due to CORS restrictions
         };
 
-        // Current active tab
+        // Current active tab and date
         let activeTab = 'calendar';
+        let currentDate = new Date();
 
         // Load data for active tab
         async function loadTabData(tabId) {
@@ -430,17 +491,8 @@
                     case 'event-list':
                         await loadEventList();
                         break;
-                    case 'event-history':
-                        await loadEventHistory();
-                        break;
-                    case 'ml-analysis':
-                        await loadMLAnalysis();
-                        break;
-                    case 'smart-analysis':
-                        await loadSmartAnalysis();
-                        break;
-                    case 'gpt-insights':
-                        await loadGPTInsights();
+                    case 'analysis':
+                        await loadAnalysis();
                         break;
                 }
             } catch (error) {
@@ -457,23 +509,95 @@
             }
         }
 
-        // Load calendar data
+        // Load calendar data from Forex Factory weekly file
         async function loadCalendarData() {
-            // This would fetch from your Forex Factory API endpoint
-            const response = await fetch(FOREX_FACTORY_ENDPOINTS.calendar);
-            const data = await response.json();
+            try {
+                // In a real implementation, you would fetch the XML/JSON file
+                // from Forex Factory's weekly data feed
+                // This is a simplified example with mock data
+                
+                const calendarData = await fetchCalendarData();
+                renderCalendar(calendarData);
+                
+            } catch (error) {
+                console.error('Error loading calendar:', error);
+                // Fallback to mock data if real data isn't available
+                renderCalendar(generateMockCalendarData());
+            }
+        }
+
+        // Fetch calendar data (simulated)
+        async function fetchCalendarData() {
+            // In a real implementation, you would:
+            // 1. Fetch the XML/JSON file from Forex Factory's weekly data
+            // 2. Parse the data into a usable format
+            // 3. Return the parsed data
             
-            // Render calendar (simplified example)
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Return mock data for demonstration
+            return generateMockCalendarData();
+        }
+
+        // Generate mock calendar data for demonstration
+        function generateMockCalendarData() {
+            const events = [];
+            const impacts = ['High', 'Medium', 'Low'];
+            const currencies = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'NZD', 'CHF'];
+            const eventTypes = [
+                'Interest Rate Decision', 'GDP', 'CPI', 'Employment Change', 
+                'Retail Sales', 'PMI', 'Trade Balance', 'Central Bank Speech'
+            ];
+            
+            // Generate events for the current week
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                
+                // Add 2-5 events per day
+                const eventsCount = 2 + Math.floor(Math.random() * 4);
+                for (let j = 0; j < eventsCount; j++) {
+                    const impact = impacts[Math.floor(Math.random() * impacts.length)];
+                    const currency = currencies[Math.floor(Math.random() * currencies.length)];
+                    const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+                    
+                    events.push({
+                        date: new Date(date),
+                        time: `${9 + Math.floor(Math.random() * 8)}:${Math.random() > 0.5 ? '30' : '00'}`,
+                        currency: currency,
+                        event: `${currency} ${eventType}`,
+                        impact: impact,
+                        actual: impact === 'High' ? (Math.random() * 5).toFixed(1) : null,
+                        forecast: impact === 'High' ? (Math.random() * 5).toFixed(1) : null,
+                        previous: impact === 'High' ? (Math.random() * 5).toFixed(1) : null
+                    });
+                }
+            }
+            
+            return events;
+        }
+
+        // Render calendar with events
+        function renderCalendar(events) {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            
             const calendarHtml = `
                 <div class="calendar">
                     <div class="calendar-header">
                         <h3>Economic Calendar</h3>
                         <div class="calendar-nav">
-                            <button class="btn-secondary btn-small" onclick="changeCalendarMonth(-1)">
+                            <button class="btn-secondary btn-small" id="prev-week">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
-                            <span>November 2023</span>
-                            <button class="btn-secondary btn-small" onclick="changeCalendarMonth(1)">
+                            <span id="current-week">Week of ${monthNames[currentDate.getMonth()]} ${currentDate.getDate()}</span>
+                            <button class="btn-secondary btn-small" id="next-week">
                                 <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>
@@ -486,34 +610,125 @@
                         <div class="calendar-day header">Thu</div>
                         <div class="calendar-day header">Fri</div>
                         <div class="calendar-day header">Sat</div>
-                        ${renderCalendarDays(data)}
+                        ${renderCalendarDays(events)}
                     </div>
                 </div>
             `;
             
             document.getElementById('calendar').innerHTML = calendarHtml;
+            
+            // Add event listeners for navigation
+            document.getElementById('prev-week').addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 7);
+                loadTabData('calendar');
+            });
+            
+            document.getElementById('next-week').addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 7);
+                loadTabData('calendar');
+            });
         }
 
-        // Render calendar days (simplified)
-        function renderCalendarDays(data) {
+        // Render calendar days with events
+        function renderCalendarDays(events) {
             let html = '';
-            // This would generate the actual calendar grid with events
-            for (let i = 0; i < 35; i++) {
-                html += `<div class="calendar-day">${i < 30 ? i + 1 : ''}</div>`;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Group events by date
+            const eventsByDate = {};
+            events.forEach(event => {
+                const dateStr = event.date.toDateString();
+                if (!eventsByDate[dateStr]) {
+                    eventsByDate[dateStr] = [];
+                }
+                eventsByDate[dateStr].push(event);
+            });
+            
+            // Generate calendar days for the current week
+            const startOfWeek = new Date(currentDate);
+            startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+            
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + i);
+                
+                const dateStr = date.toDateString();
+                const dayEvents = eventsByDate[dateStr] || [];
+                
+                const isToday = date.toDateString() === today.toDateString();
+                
+                html += `
+                    <div class="calendar-day ${isToday ? 'today' : ''}">
+                        <div class="day-number">${date.getDate()}</div>
+                        ${dayEvents.map(event => `
+                            <div class="event-item ${event.impact.toLowerCase()}" 
+                                 onclick="showEventDetails(${JSON.stringify(event).replace(/"/g, '&quot;')})">
+                                ${event.time} - ${event.currency} - ${event.event}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
             }
+            
             return html;
         }
 
+        // Show event details in modal
+        function showEventDetails(event) {
+            document.getElementById('modal-event-title').textContent = event.event;
+            
+            const eventHtml = `
+                <div class="event-details">
+                    <p><strong>Time:</strong> ${event.time}</p>
+                    <p><strong>Currency:</strong> ${event.currency}</p>
+                    <p><strong>Impact:</strong> <span class="impact-${event.impact.toLowerCase()}">${event.impact}</span></p>
+                    ${event.actual ? `<p><strong>Actual:</strong> ${event.actual}</p>` : ''}
+                    ${event.forecast ? `<p><strong>Forecast:</strong> ${event.forecast}</p>` : ''}
+                    ${event.previous ? `<p><strong>Previous:</strong> ${event.previous}</p>` : ''}
+                </div>
+            `;
+            
+            document.getElementById('modal-event-content').innerHTML = eventHtml;
+            document.getElementById('event-modal').style.display = 'flex';
+        }
+
+        // Close event modal
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('event-modal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === document.getElementById('event-modal')) {
+                document.getElementById('event-modal').style.display = 'none';
+            }
+        });
+
         // Load event list
         async function loadEventList() {
-            const response = await fetch(FOREX_FACTORY_ENDPOINTS.eventList);
-            const events = await response.json();
-            
+            try {
+                const events = await fetchCalendarData();
+                renderEventList(events);
+            } catch (error) {
+                console.error('Error loading event list:', error);
+                document.getElementById('event-list').innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                        <p>Error loading event list</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render event list
+        function renderEventList(events) {
             const tableHtml = `
                 <div class="event-table-container">
                     <table class="event-table">
                         <thead>
                             <tr>
+                                <th>Date</th>
                                 <th>Time</th>
                                 <th>Currency</th>
                                 <th>Event</th>
@@ -525,10 +740,11 @@
                         </thead>
                         <tbody>
                             ${events.map(event => `
-                                <tr>
+                                <tr onclick="showEventDetails(${JSON.stringify(event).replace(/"/g, '&quot;')})">
+                                    <td>${event.date.toLocaleDateString()}</td>
                                     <td>${event.time}</td>
                                     <td>${event.currency}</td>
-                                    <td>${event.name}</td>
+                                    <td>${event.event}</td>
                                     <td><span class="impact-${event.impact.toLowerCase()}">${event.impact}</span></td>
                                     <td>${event.actual || '-'}</td>
                                     <td>${event.forecast || '-'}</td>
@@ -543,7 +759,36 @@
             document.getElementById('event-list').innerHTML = tableHtml;
         }
 
-        // Load other data functions would follow similar patterns...
+        // Load analysis
+        async function loadAnalysis() {
+            // This would be your custom analysis based on the Forex Factory data
+            // For now, we'll show placeholder analysis
+            document.getElementById('analysis').innerHTML = `
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <div class="analysis-header">
+                            <h4>USD Strength Analysis</h4>
+                            <span class="sentiment bullish">Bullish</span>
+                        </div>
+                        <p>USD shows strength ahead of Fed meeting. Multiple high-impact events this week could increase volatility.</p>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-header">
+                            <h4>EUR Outlook</h4>
+                            <span class="sentiment bearish">Bearish</span>
+                        </div>
+                        <p>ECB policy uncertainty weighs on EUR. Watch for ECB speeches and inflation data.</p>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-header">
+                            <h4>Week Ahead</h4>
+                            <span class="sentiment hawkish">Hawkish</span>
+                        </div>
+                        <p>Central bank rhetoric suggests tighter monetary policy ahead. Focus on interest rate decisions.</p>
+                    </div>
+                </div>
+            `;
+        }
 
         // Tab switching functionality
         function setupTabs() {
@@ -593,27 +838,6 @@
                 });
             }
         });
-
-        // Placeholder functions for other endpoints
-        async function loadEventHistory() {
-            // Implementation for event history
-        }
-
-        async function loadMLAnalysis() {
-            // Implementation for ML analysis
-        }
-
-        async function loadSmartAnalysis() {
-            // Implementation for smart analysis
-        }
-
-        async function loadGPTInsights() {
-            // Implementation for GPT insights
-        }
-
-        function changeCalendarMonth(direction) {
-            // Implementation for calendar navigation
-        }
     </script>
 </body>
 </html>
