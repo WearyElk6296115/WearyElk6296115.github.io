@@ -1,5 +1,7 @@
-// main.js - Main JavaScript functionality
+// main.js - Main JavaScript functionality for trading website
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('MarketPulse Pro initialized');
+    
     // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Tab functionality
+    // Tab functionality for market data
     const tabBtns = document.querySelectorAll('.tab-btn');
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -29,12 +31,18 @@ document.addEventListener('DOMContentLoaded', function() {
             if (tabContent) {
                 tabContent.classList.add('active');
             }
+            
+            // Load data for the selected tab
+            if (typeof loadMarketData === 'function') {
+                loadMarketData(tabId);
+            }
         });
     });
 
-    // Initialize market data if function exists
-    if (typeof initMarketData === 'function') {
-        initMarketData();
+    // Initialize market data if on homepage or markets page
+    if (document.querySelector('.market-table') && typeof loadMarketData === 'function') {
+        // Load crypto data by default
+        loadMarketData('crypto');
     }
 
     // Initialize news if on news page
@@ -46,7 +54,36 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.signals-container') && typeof loadSignals === 'function') {
         loadSignals();
     }
+
+    // Initialize generator iframe if on generator page
+    if (document.getElementById('generator-frame')) {
+        initGenerator();
+    }
 });
+
+// Initialize the signal generator iframe
+function initGenerator() {
+    const frame = document.getElementById('generator-frame');
+    if (frame) {
+        frame.src = 'http://localhost:8501';
+        
+        // Add error handling for the iframe
+        frame.addEventListener('load', function() {
+            console.log('Signal generator loaded successfully');
+        });
+        
+        frame.addEventListener('error', function() {
+            console.error('Failed to load signal generator');
+            frame.innerHTML = `
+                <div class="error-message">
+                    <h3>Signal Generator Unavailable</h3>
+                    <p>Please ensure your signal generator server is running at http://localhost:8501</p>
+                    <button onclick="initGenerator()">Retry Connection</button>
+                </div>
+            `;
+        });
+    }
+}
 
 // Utility function for API calls
 async function fetchData(url) {
